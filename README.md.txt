@@ -1,1 +1,0 @@
-This repository is dedicated to the website of Cécile Deprez, in the context of her activity as a speaker.
