@@ -1,0 +1,5 @@
+remote_theme: pages-themes/cayman@v0.2.0
+plugins:
+- jekyll-remote-theme # add this line to the plugins list if you already have one
+title: Cécile Deprez - pubic speaker
+description: On this website, you will see my different interventions and get a better idea of the topics I usually talk about.
