@@ -36,7 +36,7 @@ body{
 
 .right-colmun{
 	width: 50%;
-	float: left;
+	float: right;
 	padding: 20px;
 	box-sizing: border_box;
 }
@@ -54,10 +54,10 @@ body{
 .profile-img{
 	width: 50%;
 	height: auto;
-	border-radius: 50%;
-	/* If I want to change the border of the picture:
+	/*border-radius: 50%;
+	If I want to change the border of the picture:*/
 	border-top-left-radius: 50%;
-	border-bottom-left-radius: 50%;*/
+	border-bottom-left-radius: 50%;
 }
 
 .left, .right {
