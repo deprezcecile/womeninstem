@@ -56,8 +56,8 @@ body{
 	height: auto;
 	/*border-radius: 50%;
 	If I want to change the border of the picture:*/
-	border-top-left-radius: 50%;
-	border-bottom-left-radius: 50%;
+	border-top-right-radius: 50%;
+	border-bottom-right-radius: 50%;
 }
 
 .left, .right {
