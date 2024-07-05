@@ -54,12 +54,19 @@ File: Layout CSS
 
 /* Page Intro
 --------------------------------------------------------------------------------------------------------------- */
-#pageintro{padding:200px 0 400px;}/* 400px => 200px for #introblocks negative margin */
+#pageintro{
+	padding:200px 0 400px;
+}/* 400px => 200px for #introblocks negative margin */
 
-#pageintro article, #pageintro article p{display:block; max-width:75%; margin:0 auto; text-align:center;}
+#pageintro article, #pageintro article p{
+	display:block; 
+	max-width:75%; 
+	margin:0 auto; 
+	text-align:center;
+	transform: translate(0%,90%);} 
 #pageintro article p{max-width:65%; line-height:2rem;}
 #pageintro .heading{margin-bottom:20px; font-size:4rem;}
-#pageintro footer{margin-top:50px;}
+#pageintro footer{margin-top:120px;}
 
 
 /* Content Area
@@ -71,6 +78,11 @@ File: Layout CSS
 
 .sectiontitle{display:block; max-width:55%; margin:0 auto 80px; text-align:center;}
 .sectiontitle *{margin:0;}
+.intro-background {
+	background-color: #F3F3F3; /* Light grey background */
+	padding: 20px; /* Optional: Adds some padding inside the section for better spacing */
+	margin-bottom: 10px; /* Optional: Adds some space between this section and the next */
+  }
 
 /* Introblocks - x3 */
 #introblocks{display:block; position:relative; margin:-280px 0 0 0; z-index:1; text-align:center;}/* 280px => 200px + container padding */
@@ -135,6 +147,38 @@ File: Layout CSS
 #latest article .excerpt time em{padding:8px 0;}
 #latest article .excerpt p{margin:0; padding:0;}
 #latest article footer{text-align:right;}
+
+.carousel {
+	position: relative;
+	max-width: 600px;
+	margin: auto;
+	overflow: hidden;
+}
+
+.carousel-items .carousel-item {
+	display: none;
+	padding: 20px;
+	text-align: center;
+}
+
+.carousel-dots {
+	text-align: center;
+}
+
+.dot {
+	cursor: pointer;
+	height: 15px;
+	width: 15px;
+	margin: 0 2px;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+	transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+	background-color: #717171;
+}
 
 /* Comments */
 #comments ul{margin:0 0 40px 0; padding:0; list-style:none;}
@@ -490,6 +534,7 @@ table a, #comments a{background-color:inherit;}
 	#pageintro .heading{font-size:2rem;}
 
 	.sectiontitle{max-width:none;}
+	
 	
 	#introblocks > ul{margin:0 auto 80px;}
 	#introblocks > ul, #latest article{max-width:348px;}/* Restrict the width to the one_third grid element */
