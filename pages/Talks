@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talks – Cécile Deprez</title>
+<link rel="stylesheet" href="styles.css">
+
+<style>
+.sort-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+.sort-buttons button {
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.sort-buttons button:hover {
+    background-color: #540a9c;
+}
+.talk-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.talk-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.talk-title {
+    margin-top: 0;
+    color: #6a0dad;
+}
+.talk-link {
+    color: #6a0dad;
+    text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+    <h1>Talks & Keynotes</h1>
+
+    <div class="content">
+        <p>A curated list of my talks, workshops, interviews, keynotes, and panels delivered across Europe and beyond.</p>
+    </div>
+
+    <div class="sort-buttons">
+        <button onclick="sortBy('year')">Sort by Year</button>
+        <button onclick="sortBy('type')">Sort by Type</button>
+        <button onclick="sortBy('location')">Sort by Location</button>
+        <button onclick="sortBy('format')">Sort by Format</button>
+    </div>
+
+    <div class="content">
+        <h2>Talks</h2>
+        <div id="talkList" class="talk-list"></div>
+    </div>
+</div>
+
+<script>
+// Load CSV
+async function loadCSV() {
+    const response = await fetch("talks.csv");
+    const text = await response.text();
+    return parseCSV(text);
+}
+
+// Parse CSV into objects
+function parseCSV(csv) {
+    const lines = csv.trim().split("\n");
+    const headers = lines[0].replace(/"/g, "").split(",");
+
+    return lines.slice(1).map(line => {
+        const fields = line.match(/"([^"]*)"/g).map(f => f.replace(/"/g, ""));
+        const obj = {};
+        headers.forEach((h, i) => obj[h] = fields[i] || "");
+        return obj;
+    });
+}
+
+// Extract year
+function extractYear(dateString) {
+    const match = dateString.match(/\b(20\d{2})\b/);
+    return match ? match[1] : "Unknown";
+}
+
+// Render cards
+function renderTalks(list) {
+    const container = document.getElementById("talkList");
+    container.innerHTML = "";
+
+    list.forEach(talk => {
+        const links = talk.Links
+            ? talk.Links.split(" | ").map(l => `<a class="talk-link" href="${l}" target="_blank">Link</a>`).join(", ")
+            : "";
+
+        const card = document.createElement("div");
+        card.className = "talk-card";
+
+        card.innerHTML = `
+            <h3 class="talk-title">${talk.Title || "(No title)"}</h3>
+            <p><strong>Date:</strong> ${talk.Date}</p>
+            <p><strong>Type:</strong> ${talk.Type || "—"}</p>
+            <p><strong>Format:</strong> ${talk.Format || "—"}</p>
+            <p><strong>Location:</strong> ${talk.Place || "—"}</p>
+            ${links ? `<p><strong>Links:</strong> ${links}</p>` : ""}
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+// Sorting
+let talks = [];
+
+function sortBy(criteria) {
+    let sorted = [...talks];
+
+    if (criteria === "year") {
+        sorted.sort((a, b) => extractYear(b.Date) - extractYear(a.Date));
+    } else if (criteria === "type") {
+        sorted.sort((a, b) => (a.Type || "").localeCompare(b.Type || ""));
+    } else if (criteria === "location") {
+        sorted.sort((a, b) => (a.Place || "").localeCompare(b.Place || ""));
+    } else if (criteria === "format") {
+        sorted.sort((a, b) => (a.Format || "").localeCompare(b.Format || ""));
+    }
+
+    renderTalks(sorted);
+}
+
+// Initialize
+loadCSV().then(data => {
+    talks = data;
+
+    // Default: newest → oldest
+    talks.sort((a, b) => extractYear(b.Date) - extractYear(a.Date));
+
+    renderTalks(talks);
+});
+</script>
+
+</body>
+</html>
